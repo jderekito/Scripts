@@ -1,0 +1,10 @@
+ Volume in drive C is OS
+ Volume Serial Number is 3A0D-5F30
+
+ Directory of C:\Data\PhD\Teaching\GISProgramming\ArcGIS\ExtractRasterValueByPoint
+
+03/15/2013  04:09 PM         1,395,436 NDVIAP.img
+07/09/2012  02:41 PM        17,383,506 NLCD2006AP.img
+03/15/2013  04:16 PM            87,837 UrbanGrowth2050AP.img
+               3 File(s)     18,866,779 bytes
+               0 Dir(s)  634,295,844,864 bytes free
