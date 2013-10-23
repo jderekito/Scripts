@@ -1,0 +1,29 @@
+#! /usr/bin/python
+
+# Script to print out the database password for a MySql database.
+#
+# Author: Mark Phillips <mphillip@unca.edu>
+
+import sys, re, os, optparse
+sys.path.append(".") # this line gets replaced by `make install`
+import drutils
+
+def usage():
+    print "usage: dbpw NAME"
+    drutils.common_usage();
+    sys.exit(-1)
+
+if __name__ == "__main__":
+    #
+    # Process the arguments
+    #
+    parser = optparse.OptionParser()
+    (opts, args) = parser.parse_args()
+
+    if len(args) != 1:
+        drutils.common_usage();
+        sys.exit(-1)
+    NAME = args[0]
+
+    # Print the password
+    print drutils.get_db_password(NAME)

@@ -1,0 +1,29 @@
+#! /usr/bin/python
+
+# Script to print out all the current MySql databases.  See README.md
+# for more details.
+#
+# Author: Mark Phillips <mphillip@unca.edu>
+
+import sys, re, os, optparse
+sys.path.append(".") # this line gets replaced by `make install`
+import drutils
+
+def usage():
+    print "usage: dblist [--dbsu=USER:PASSWORD]"
+    drutils.common_usage();
+    sys.exit(-1)
+
+if __name__ == "__main__":
+    #
+    # Process the arguments
+    #
+    parser = optparse.OptionParser()
+    drutils.add_dbsu_option(parser)
+    (opts, args) = parser.parse_args()
+    (DB_SU, DB_SU_PW) = drutils.get_dbsu(opts)
+
+    #
+    # Print out the databases
+    #
+    print "\n".join(drutils.get_databases(DB_SU, DB_SU_PW))

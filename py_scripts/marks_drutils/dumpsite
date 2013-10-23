@@ -1,0 +1,34 @@
+#! /usr/bin/python
+
+# Script to create a .tgz dumpfile of a Drupal site, including all
+# files in the site directory tree, and a current snapshot of the
+# database contents.  This is really just a convenient wrapper around
+# "drush archive-dump".  See README.md for more details.
+#
+# Author: Mark Phillips <mphillip@unca.edu>
+
+import sys, re
+sys.path.append(".") # this line gets replaced by `make install`
+import drutils
+
+def usage():
+    print "usage: dumpsite SITEROOT"
+    drutils.common_usage();
+    sys.exit(-1)
+
+if __name__ == "__main__":
+    # Get the SITEROOT argument
+    if len(sys.argv) != 2:
+        usage()
+    SITEROOT = drutils.standardize_siteroot(sys.argv[1])
+    # Validate the SITEROOT
+    if not drutils.validate_siteroot(SITEROOT):
+        print "%s does not appear to be a valid Drupal site root directory" % SITEROOT
+        sys.exit(-1)
+    # Create the dumpfile name
+    dumpfile = drutils.generate_dumpfile_name(SITEROOT)
+    # Write the dumpfile
+    if drutils.command_success("drush -q -r %s archive-dump --destination=%s" % (SITEROOT, dumpfile)):
+        print "Wrote %s" % dumpfile
+    else:
+        print "An error occurred while writing the dumpfile."

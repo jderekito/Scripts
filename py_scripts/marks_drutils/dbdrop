@@ -1,0 +1,61 @@
+#! /usr/bin/python
+
+# Script to drop a given MySql database and user. See 
+# README.md for more details.
+#
+# Author: Mark Phillips <mphillip@unca.edu>
+
+import sys, re, os, optparse
+sys.path.append(".") # this line gets replaced by `make install`
+import drutils
+
+def usage():
+    print "usage: dbdrop [--dbsu=USER:PASSWORD] NAME"
+    drutils.common_usage();
+    sys.exit(-1)
+
+if __name__ == "__main__":
+    #
+    # Process the arguments
+    #
+    parser = optparse.OptionParser()
+    drutils.add_dbsu_option(parser)
+    (opts, args) = parser.parse_args()
+    (DB_SU, DB_SU_PW) = drutils.get_dbsu(opts)
+
+    if len(args) != 1:
+        drutils.common_usage();
+        sys.exit(-1)
+    NAME = args[0]
+
+    user_exists = drutils.database_user_exists(NAME, DB_SU, DB_SU_PW)
+    database_exists = drutils.database_exists(NAME, DB_SU, DB_SU_PW)
+
+    if user_exists and database_exists:
+        if drutils.confirm_with_yes("really drop database and user '%s'? [type 'yes' (without the quotes) to confirm] " % NAME):
+            drutils.drop_database(NAME, DB_SU, DB_SU_PW)
+            print "dropped database '%s'" % NAME;
+            drutils.drop_user(NAME, DB_SU, DB_SU_PW)
+            print "dropped user '%s'" % NAME;
+        else:
+            print "Nothing dropped."
+    elif not user_exists and database_exists:
+        print "No user named '%s' found." % NAME
+        if drutils.confirm_with_yes("really drop database '%s'? [type 'yes' (without the quotes) to confirm] " % NAME):
+            drutils.drop_database(NAME, DB_SU, DB_SU_PW)
+            print "dropped database '%s'" % NAME;
+        else:
+            print "Nothing dropped."
+    elif user_exists and not database_exists:
+        print "No database named '%s' found." % NAME
+        if drutils.confirm_with_yes("really drop user '%s'? [type 'yes' (without the quotes) to confirm] " % NAME):
+            drutils.drop_user(NAME, DB_SU, DB_SU_PW)
+            print "dropped user '%s'" % NAME;
+        else:
+            print "Nothing dropped."
+    else:
+        print "No database or user named '%s' found." % NAME;
+
+    cnf = "/var/drutils/mysql/%s.cnf" % NAME
+    if os.path.exists(cnf):
+        os.remove(cnf)
