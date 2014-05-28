@@ -11,7 +11,9 @@ osgeo.gdal.AllRegister()
 driver = osgeo.gdal.GetDriverByName('HFA')
 driver.Register()
 
-ds = osgeo.gdal.Open('../data/UrbanGrowth2050AP.img', osgeo.gdal.GA_ReadOnly)
+# os.chdir('C:/Data/NEMAC/Projects/FCAV/CarbonStock')
+
+ds = osgeo.gdal.Open('carbon_8bit_ag_mg_ha.img', osgeo.gdal.GA_ReadOnly)
 if ds is None:
     print 'Could not open file'
     sys.exit(1)

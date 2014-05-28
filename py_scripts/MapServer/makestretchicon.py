@@ -74,7 +74,7 @@ OPTIONS
         Quiet mode; suppresses the output message indicating that the PNG file has been written.
 
 EXAMPLE
-    ./makeicon -W 128 -h 15 -f 8 -t '% change' -l 0 -r 100 efetac_nasa_percent_change_cmap.csv legendicons/efetac_nasa.png
+	./makestretchicon.py -c "Carbon Stock 2009" -T 0 -W 128 -h 15 -f 8 -L 0,0,0 -H 222,247,239 -l low -r high Carbon09.png
 
 AUTHOR
     Mark Phillips

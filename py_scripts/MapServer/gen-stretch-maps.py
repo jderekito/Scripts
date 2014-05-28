@@ -5,10 +5,9 @@ import os, re
 
 
 files = [
-    #MODIS Phenological Parameters
-    { 'path' : '../data/UrbanGrowth2050AP.img',
-      'layerName' : 'right-val-20pct-2009',
-      'minColor' : '0,0,0',  'maxColor' : '255,255,255' },
+    { 'path' : '../data/bauempby15_2000.img',
+      'layerName' : 'bauemp',
+      'minColor' : '204,204,255',  'maxColor' : '0,0,153' },
     ];
 
 

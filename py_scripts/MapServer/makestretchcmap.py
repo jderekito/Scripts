@@ -24,8 +24,14 @@ class ColorInterp:
 
 # ./makestretchcmap.py -N 10 -n 0 -x 100 --rgbMin 0,0,0 --rgbMax 255,255,255
 # OR
-# ./makestretchcmap.py -N 10 -a RASTERFILE --rgbMin 0,0,0 --rgbMax 255,255,255
+# ./makestretchcmap.py -N 40 -a carbon_8bit_ag_mg_ha.img --rgbMin 222,247,239 --rgbMax 41,109,57 
+# OR
+# ./makestretchcmap.py -N 20 -x 30 -n 0 --rgbMin 222,247,239 --rgbMax 41,109,57 
 #-------------------------------------------------------
+
+#Change to working directory where raster data file is
+os.chdir('C:/Data/NEMAC/Projects/FCAV/CarbonStock')
+
 #Verify input args    
 parser = optparse.OptionParser()
 parser.add_option('-N', help='mandatory N', dest='N', type="string")

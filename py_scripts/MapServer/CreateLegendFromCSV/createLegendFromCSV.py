@@ -1,13 +1,15 @@
+#! /usr/bin/python
+
 import Image, ImageDraw, os
 import ImageFont, csv
 
 fontsize = 17  # starting font size
 font = ImageFont.truetype("arial.ttf", fontsize)
 fontBold = ImageFont.truetype("arialbd.ttf", fontsize)
-os.chdir('C:/Data/GitHub/scripts/py_scripts/CreateLegendFromCSV')
+os.chdir('C:/Data/PhD/Teaching/GISProgramming/ArcGIS/CreateLegendFromCSV')
 
 #1. First determine the canvas height by reading in the CSV values
-vals = csv.DictReader(open("LFFM40.csv", 'rb'), delimiter=',', quotechar='"')
+vals = csv.DictReader(open("EVT.csv", 'rb'), delimiter=',', quotechar='"')
 i = 0
 for line in vals:	
 	i = i + 1
@@ -25,7 +27,7 @@ legendCanvas = Image.new('RGBA', (900, cavasHeightY))#transparent
 draw = ImageDraw.Draw(legendCanvas)
 
 #3. Title
-draw.text((10, textY), "LANDFIRE Fuel Model 40", fill="black", font=fontBold)
+draw.text((10, textY), "LANDFIRE Existing Veg Type", fill="black", font=fontBold)
 recBottomLeftY = recBottomLeftY + 20
 recTopRightY = recTopRightY + 20
 textY = textY + 20
@@ -36,14 +38,14 @@ textY = textY + 20
 # [ x, y, x, y ] or [ (x, y), (x, y) ]
 # draw.text(position, string, options)
 i = 0
-vals = csv.DictReader(open("LFFM40.csv", 'rb'), delimiter=',', quotechar='"')
+vals = csv.DictReader(open("EVT.csv", 'rb'), delimiter=',', quotechar='"')
 for line in vals:
 	draw.rectangle((10, recBottomLeftY, 40, recTopRightY), fill=(int(line['r']), int(line['g']), int(line['b'])), outline="black")
-	draw.text((45, textY), line['id']+' - '+line['cat'], fill="black", font=font)
+	draw.text((45, textY), line['cat']+' - '+line['id'], fill="black", font=font)
 	recBottomLeftY = recBottomLeftY + 20
 	recTopRightY = recTopRightY + 20
 	textY = textY + 20
 	i = i + 1
 
-filename = "LFFM40.png"
+filename = "EVTLegend.png"
 legendCanvas.save(filename)
